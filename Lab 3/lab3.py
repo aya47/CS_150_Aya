@@ -10,6 +10,8 @@ Date: January 1, 2025
 # Import necessary modules
 import os
 import csv 
+import statistics
+
 # TODO: Define the necessary constants
 # You will need constants for host id, host name, room type, price, min. number of nights, and license
 # They can start with IDX_ or INDEX_, whatever you prefer
@@ -49,8 +51,6 @@ def read_data(path_to_csv: str) -> list[list[str]]:
         data = list(reader)
     return data 
 
-listings_csv = read_data("chicago_listings.csv")
-listings = listings_csv[1:]
 
 # TODO: Task 1: Count the number of listings that are short-term rentals (their min. number of nights is < 30).
 def count_short_term_rentals(data: list[list[str]]) -> int:
@@ -63,14 +63,7 @@ def count_short_term_rentals(data: list[list[str]]) -> int:
         int: The number of listings that are short-term rentals 
     """
     # Your code goes here
-    """
-    
-    count = 0
-    for rental in data[1:]:
-        if int(rental[INDEX_NIGHTS]) < 30:
-            count += 1 
-    """
-    return sum(1 for rental in data[1:] if int(rental[INDEX_NIGHTS]) < 30)
+    return sum(1 for rental in data if int(rental[INDEX_NIGHTS]) < 30)
 
 # TODO: Task 2: Count listings by their room type (ignore entries with an empty room type).
 # Returns a dictionary with string keys and integer values. The keys are taken from the dataset (don't hardcode them).
@@ -88,7 +81,7 @@ def count_listings_by_type(data: list[list[str]]) -> dict[str, int]:
     """
     # Your code goes here
     inventory = dict()
-    for listing in data[1:]:
+    for listing in data:
         # check for empty entries 
         if listing[INDEX_TYPE] == "" or listing[INDEX_TYPE] == None:
             break
@@ -124,7 +117,7 @@ def get_license_status(data: list[list[str]]) -> dict[str, int]:
     inventory = {"unlicensed":0, "pending":0, "exempt":0, "licensed":0} 
 
     # Loop through the listings data and allocate a +1 count to each license type
-    for listing in data[1:]:
+    for listing in data:
         # check with if statements for all types according to specs above 
         if listing[INDEX_LICENSE] == None or listing[INDEX_LICENSE] == "":
             inventory["unlicensed"] += 1 
@@ -152,7 +145,7 @@ def count_multi_listings(data: list[list[str]]) -> int:
         int: the total number of hosts who have more than 1 listing on Airbnb
     """
     # Your code goes here
-    inventory = [listing[INDEX_HOST_ID] for listing in data[1:]]
+    inventory = [listing[INDEX_HOST_ID] for listing in data]
     count = [h_id for h_id in inventory if inventory.count(h_id) > 1]
     return len(count)
 
@@ -174,7 +167,7 @@ def count_listings_by_host_count(data: list[list[str]]) -> list[int]:
     """
     listing_counts = [0] * 11  # [0, 0,...0]
 
-    inventory = [listing[INDEX_HOST_ID] for listing in data[1:]]
+    inventory = [listing[INDEX_HOST_ID] for listing in data]
     count = list()
 
     # Your code goes here
@@ -219,9 +212,9 @@ def get_prices(data: list[list[str]], room_type: str = "") -> list[float]:
     # Your code goes here
     prices = list()
     if room_type == "":
-        prices = [float(listing[INDEX_PRICE]) for listing in data[1:] if listing[INDEX_PRICE] != '']
+        prices = [float(listing[INDEX_PRICE]) for listing in data if listing[INDEX_PRICE] != '']
     else: 
-        prices = [float(listing[INDEX_PRICE]) for listing in data[1:] if listing[INDEX_TYPE] == room_type if listing[INDEX_PRICE] != '']
+        prices = [float(listing[INDEX_PRICE]) for listing in data if listing[INDEX_TYPE] == room_type if listing[INDEX_PRICE] != '']
 
     return prices
 
@@ -243,7 +236,7 @@ def get_host_name_by_id(data: list[list[str]], query_id: str) -> str:
     # Make a dictionary where:
         #  keys correspond to host_id 
         #  values correspond to host name  
-    hosts = {listing[INDEX_HOST_ID] :listing[INDEX_HOST_NAME] for listing in data[1:]}
+    hosts = {listing[INDEX_HOST_ID] :listing[INDEX_HOST_NAME] for listing in data}
     if query_id in hosts:
         host_name = hosts[query_id]
     else:
@@ -275,12 +268,12 @@ def listings_per_host_with_type(data: list[list[str]], room_type: str = "") -> d
 
     # Make a list of all the hosts 
         # (if a host has more than a listing, their value will be duplicated for every extra listing they have)
-    hosts = [listing[INDEX_HOST_ID] for listing in data[1:]]
+    hosts = [listing[INDEX_HOST_ID] for listing in data]
 
     if room_type == "":
-        host_listings = {listing[INDEX_HOST_ID]: hosts.count(listing[INDEX_HOST_ID]) for listing in data[1:] if listing[INDEX_HOST_ID] not in host_listings}
+        host_listings = {listing[INDEX_HOST_ID]: hosts.count(listing[INDEX_HOST_ID]) for listing in data if listing[INDEX_HOST_ID] not in host_listings}
     else: 
-        host_listings = {listing[INDEX_HOST_ID]: hosts.count(listing[INDEX_HOST_ID]) for listing in data[1:] if listing[INDEX_TYPE] == room_type and listing[INDEX_HOST_ID] not in host_listings}
+        host_listings = {listing[INDEX_HOST_ID]: hosts.count(listing[INDEX_HOST_ID]) for listing in data if listing[INDEX_TYPE] == room_type and listing[INDEX_HOST_ID] not in host_listings}
 
     return host_listings
 
@@ -398,9 +391,9 @@ def run_test_code() -> None:
     # # TODO: Test Task 7
     # # Add at a call to get_host_name_by_id and at least three assert statements
     # # Your code goes here
-    assert get_host_name_by_id(listings_csv, "2613") == "Rebecca", "Should return 'Rebecca' for host_id 2613"
-    assert get_host_name_by_id(listings_csv, "0000000000000000") == "Name not found", "Should return 'Name not found' for host_id 0000000000000000"
-    assert get_host_name_by_id(listings_csv, " ") == "Name not found", "Should return 'Name not found' for host_id ' ' "
+    assert get_host_name_by_id(listings, "2613") == "Rebecca", "Should return 'Rebecca' for host_id 2613"
+    assert get_host_name_by_id(listings, "0000000000000000") == "Name not found", "Should return 'Name not found' for host_id 0000000000000000"
+    assert get_host_name_by_id(listings, " ") == "Name not found", "Should return 'Name not found' for host_id ' ' "
 
 
     # Test Task 8
