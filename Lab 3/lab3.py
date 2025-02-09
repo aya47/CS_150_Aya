@@ -169,7 +169,13 @@ def count_multi_listings(data: list[list[str]]) -> int:
 #
 # Refer to the bar diagram titled "Listings Per Host" on https://insideairbnb.com/chicago.
 def count_listings_by_host_count(data: list[list[str]]) -> list[int]:
-    """..."""
+    """Counts the number of hosts who have i listings, where i ranges from 0 to 10+
+    Args:
+        data list[list[str]]: a list of listings with characteristics, including host_id
+        
+    Returns: 
+        list[int]: the number of hosts who have the index's amount of listings 
+    """
     listing_counts = [0] * 11  # [0, 0,...0]
 
     inventory = [listing[INDEX_HOST_ID] for listing in data[1:]]
