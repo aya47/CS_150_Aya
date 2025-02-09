@@ -249,7 +249,7 @@ def get_host_name_by_id(data: list[list[str]], query_id: str) -> str:
     # Make a dictionary where:
         #  keys correspond to host_id 
         #  values correspond to host name  
-    hosts = {listing[INDEX_HOST_ID] :listing[INDEX_HOST_NAME] for listing in data }
+    hosts = {listing[INDEX_HOST_ID] :listing[INDEX_HOST_NAME] for listing in data[1:]}
     if query_id in hosts:
         host_name = hosts[query_id]
     else:
@@ -257,6 +257,7 @@ def get_host_name_by_id(data: list[list[str]], query_id: str) -> str:
 
     return host_name 
 
+#print(get_host_name_by_id(listings_csv, "1876597")) -> The adventurers 
 
 # TODO: Task 8: Get the number of listings per host.
 # Returns a dictionary where the keys are strings denoting host ids and the values are integers denoting each host's listing count.
