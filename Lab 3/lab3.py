@@ -219,9 +219,9 @@ def get_prices(data: list[list[str]], room_type: str = "") -> list[float]:
     # Your code goes here
     prices = list()
     if room_type == "":
-        prices = [listing[INDEX_PRICE] for listing in data[1:]]
+        prices = [float(listing[INDEX_PRICE]) for listing in data[1:] if listing[INDEX_PRICE] != '']
     else: 
-        prices = [listing[INDEX_PRICE] for listing in data[1:] if listing[INDEX_TYPE] == room_type]
+        prices = [float(listing[INDEX_PRICE]) for listing in data[1:] if listing[INDEX_TYPE] == room_type if listing[INDEX_PRICE] != '']
 
     return prices
 
