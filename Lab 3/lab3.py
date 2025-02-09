@@ -291,7 +291,7 @@ def listings_per_host_with_type(data: list[list[str]], room_type: str = "") -> d
 
     return host_listings
 
-print(listings_per_host_with_type(listings_csv))
+# print(listings_per_host_with_type(listings_csv))
 def run_test_code() -> None:
     """Test the code.
 
@@ -406,6 +406,10 @@ def run_test_code() -> None:
     # # TODO: Test Task 7
     # # Add at a call to get_host_name_by_id and at least three assert statements
     # # Your code goes here
+    assert get_host_name_by_id(listings_csv, "2613") == "Rebecca", "Should return 'Rebecca' for host_id 2613"
+    assert get_host_name_by_id(listings_csv, "0000000000000000") == "Name not found", "Should return 'Name not found' for host_id 0000000000000000"
+    assert get_host_name_by_id(listings_csv, " ") == "Name not found", "Should return 'Name not found' for host_id ' ' "
+
 
     # # Test Task 8
     # # Get names of hosts and their listings
