@@ -16,6 +16,57 @@ import os
 
 # Your code for constant definitions goes here
 
+# Your code for constant definitions goes here
+INDEX_LISTING_ID = 0
+INDEX_LISTING_NAME = 1
+INDEX_HOST_ID = 2
+INDEX_HOST_NAME = 3
+INDEX_NEIGHBORHOOD = 4
+INDEX_LATITUDE = 5
+INDEX_LONGITUDE = 6
+INDEX_TYPE = 7
+INDEX_PRICE = 8
+INDEX_NIGHTS = 9
+INDEX_REVIEWS = 10
+INDEX_LAST_REVIEW = 11
+INDEX_REVIEWS_MONTH = 12
+INDEX_LICENSE = 15
+
+# Example of function docstring
+def read_data(path_to_csv: str | None) -> list[list[str]]:
+    """Read the listing data.
+
+    Args:
+        path_to_csv (str | None): The path to the csv file. Or None if there is no path.
+
+    Returns:
+        list: The Airbnb data.
+
+        *Student note: can write either list or list[list] or list[list[str]], same thing
+    """
+    # Loading data (wrong)
+    data = [[path_to_csv]]
+
+    return data
+
+
+# In general, docstrings follow the format
+def function(param_1: type, param_2: type) -> type:
+    """_brief one-line summary goes here_
+
+    _*optional* longer, multi-line summary can be included here_
+    _remove if unnecessary_
+
+    Args:
+        param_1 (type): _description_
+        param_2 (type): _description..._
+            _...rest of description indented underneath if more than 1 line_
+
+    Returns:
+        type: _description_
+            _...rest of description indented underneath if more than 1 line_
+    """
+    return param_1, param_2
 
 # TODO: Task 0: Read the data (including the first row, i.e. the column names)
 def read_data(path_to_csv: str) -> list[list[str]]:
