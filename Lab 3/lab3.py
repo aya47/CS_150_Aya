@@ -32,24 +32,6 @@ INDEX_LAST_REVIEW = 11
 INDEX_REVIEWS_MONTH = 12
 INDEX_LICENSE = 15
 
-# Example of function docstring
-def read_data(path_to_csv: str | None) -> list[list[str]]:
-    """Read the listing data.
-
-    Args:
-        path_to_csv (str | None): The path to the csv file. Or None if there is no path.
-
-    Returns:
-        list: The Airbnb data.
-
-        *Student note: can write either list or list[list] or list[list[str]], same thing
-    """
-    # Loading data (wrong)
-    data = [[path_to_csv]]
-
-    return data
-
-
 # In general, docstrings follow the format
 def function(param_1: type, param_2: type) -> type:
     """Read the listing data
@@ -77,15 +59,26 @@ def read_data(path_to_csv: str) -> list[list[str]]:
         data = list(reader)
     return data 
 
-
+read_data("chicago_listings.csv")
 # TODO: Task 1: Count the number of listings that are short-term rentals (their min. number of nights is < 30).
 def count_short_term_rentals(data: list[list[str]]) -> int:
-    """..."""
+    """Count the number of listings in the data that are short-term rentals 
+        short-term rentals are defined to have a min. number of nights of 30 nights 
+
+    Args:
+        data list[list[str]]: A list of lists containing the listings and their properties 
+    Returns:
+        int: The number of listings that are short-term rentals 
+    """
     # Your code goes here
-
-    return 0
-
-
+    """" Original code
+    count = 0
+    for listing in data:
+        if listing[INDEX_NIGHTS] < 30:
+            count += 1 
+    """
+    return sum(1 for listing in data if int(listing[INDEX_NIGHTS]) < 30)
+print(count_short_term_rentals("chicago_listings.csv"))
 # TODO: Task 2: Count listings by their room type (ignore entries with an empty room type).
 # Returns a dictionary with string keys and integer values. The keys are taken from the dataset (don't hardcode them).
 # ** Note that the dict[str, int] format means a dictionary of [<key_type>, <value_type>] pairs. **
