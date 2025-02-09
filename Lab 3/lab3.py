@@ -265,8 +265,32 @@ def get_host_name_by_id(data: list[list[str]], query_id: str) -> str:
 # * If not specified, consider all listings.
 # * If specified (e.g. "Entire home/apt"), then consider only listings with that room type.
 def listings_per_host_with_type(data: list[list[str]], room_type: str = "") -> dict[str, int]:
-    """..."""
+    """Find the number of listings each host has
+
+    Args: 
+        data list[list[str]]: a list of listings with characteristics, including host_id
+        room_type (str): a filter option to filter by room_type
+            defaults to an empty string if it's not printed 
+        
+    Returns:
+        dict[str, int]:: A dictionary of the hosts and their number of listings, where:
+            key = host id
+            value = number of listings of that host 
+    """
     # Your code goes here
+    host_listings = dict()
+
+    # Make a list of all the hosts (if a host has more than a )
+
+    inventory = [listing[INDEX_HOST_ID] for listing in data[1:]]
+
+    if room_type == "":
+        host_listings = {listing[INDEX_HOST_ID]: inventory.count(listing[INDEX_HOST_ID]) for listing in data[1:]}
+    else: 
+        host_listings = [listing[INDEX_PRICE] for listing in data[1:] if listing[INDEX_TYPE] == room_type]
+
+    return host_listings
+
 
     return {}
 
