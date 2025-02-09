@@ -32,17 +32,6 @@ INDEX_LAST_REVIEW = 11
 INDEX_REVIEWS_MONTH = 12
 INDEX_LICENSE = 15
 
-# In general, docstrings follow the format
-def function(param_1: type, param_2: type) -> type:
-    """Read the listing data
-
-    Args:
-        path_to_csv (str): The path to the csv file contaning the listings 
-    Returns:
-        list[list[str]]: The airbnb data casted in a list of lists
-    """
-    return param_1, param_2
-
 # TODO: Task 0: Read the data (including the first row, i.e. the column names)
 def read_data(path_to_csv: str) -> list[list[str]]:
     """Read the listing data
