@@ -291,7 +291,7 @@ def listings_per_host_with_type(data: list[list[str]], room_type: str = "") -> d
 
     return host_listings
 
-
+print(listings_per_host_with_type(listings_csv))
 def run_test_code() -> None:
     """Test the code.
 
