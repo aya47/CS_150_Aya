@@ -51,6 +51,7 @@ def read_data(path_to_csv: str) -> list[list[str]]:
 
 listings_csv = read_data("chicago_listings.csv")
 listings = listings_csv[1:]
+
 # TODO: Task 1: Count the number of listings that are short-term rentals (their min. number of nights is < 30).
 def count_short_term_rentals(data: list[list[str]]) -> int:
     """Count the number of listings in the data that are short-term rentals 
@@ -70,8 +71,6 @@ def count_short_term_rentals(data: list[list[str]]) -> int:
             count += 1 
     """
     return sum(1 for rental in data[1:] if int(rental[INDEX_NIGHTS]) < 30)
-#print(count_short_term_rentals(listings_csv))
-
 
 # TODO: Task 2: Count listings by their room type (ignore entries with an empty room type).
 # Returns a dictionary with string keys and integer values. The keys are taken from the dataset (don't hardcode them).
@@ -99,8 +98,6 @@ def count_listings_by_type(data: list[list[str]]) -> dict[str, int]:
         else:
             inventory[listing[INDEX_TYPE]] = 1
     return inventory 
-
-#print(count_listings_by_type(listings_csv))
 
 # TODO: Task 3: Count the number of listings by their license type (licensed, unlicensed, pending, or exempt) (*do* hardcode the keys here).
 # Returns a dictionary with string keys and integer values. The keys are "unlicensed", "pending", "exempt", "licensed".
@@ -140,7 +137,6 @@ def get_license_status(data: list[list[str]]) -> dict[str, int]:
         else: 
             inventory["licensed"] += 1 
     return inventory
-#print(get_license_status(listings_csv))
 
 # TODO: Task 4: Count the number of listings that are by hosts who have multiple listings.
 # Returns the number of listings by hosts with multiple listings (they have > 1 listing).
@@ -158,8 +154,8 @@ def count_multi_listings(data: list[list[str]]) -> int:
     # Your code goes here
     inventory = [listing[INDEX_HOST_ID] for listing in data[1:]]
     count = [h_id for h_id in inventory if inventory.count(h_id) > 1]
-    #print(count)
     return len(count)
+
 # TODO: Task 5: Count the number of listings that are by hosts who have i listings, where 0 <= i <= 10.
 # Returns a list of 11 integers where for every number i from 0 to 10...
 #   the element at index i describes how many listings are from hosts with i listings.
@@ -190,7 +186,6 @@ def count_listings_by_host_count(data: list[list[str]]) -> list[int]:
             count = [h_id for h_id in inventory if inventory.count(h_id) >= i and h_id not in count]
             listing_counts[i] = len(count)
     return listing_counts
-#print(count_listings_by_host_count(listings))
 
 # TODO: Task 6: Return a list containing listing prices, excluding empty prices.
 # The room type is an optional parameter. It's what to filter the listings by.
@@ -230,7 +225,6 @@ def get_prices(data: list[list[str]], room_type: str = "") -> list[float]:
 
     return prices
 
-#print(get_prices(listings_csv, "Private room"))
 
 # TODO: Task 7: Get the host name associated with the given query_id.
 # Returns the host name or "Name not found" if there is no host with that query_id.
@@ -257,7 +251,6 @@ def get_host_name_by_id(data: list[list[str]], query_id: str) -> str:
 
     return host_name 
 
-#print(get_host_name_by_id(listings_csv, "1876597")) -> The adventurers 
 
 # TODO: Task 8: Get the number of listings per host.
 # Returns a dictionary where the keys are strings denoting host ids and the values are integers denoting each host's listing count.
@@ -291,7 +284,6 @@ def listings_per_host_with_type(data: list[list[str]], room_type: str = "") -> d
 
     return host_listings
 
-# print(listings_per_host_with_type(listings_csv))
 def run_test_code() -> None:
     """Test the code.
 
