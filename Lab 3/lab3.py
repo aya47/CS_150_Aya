@@ -203,7 +203,15 @@ def count_listings_by_host_count(data: list[list[str]]) -> list[int]:
 #   get_prices(data)
 # In the second case, the room_type will default to ""
 def get_prices(data: list[list[str]], room_type: str = "") -> list[float]:
-    """..."""
+    """Find prices by returning a list that contains all listing prices
+    
+    Args: 
+        data list[list[str]]: a list of listings with characteristics, including listing price
+        
+    Returns:
+        list[float]: A list with all listing prices from the data
+    
+    """
     # room_type: str = "" means room_type is a str that
     # when not provided will be set to ""
     #
