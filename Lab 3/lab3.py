@@ -280,19 +280,16 @@ def listings_per_host_with_type(data: list[list[str]], room_type: str = "") -> d
     # Your code goes here
     host_listings = dict()
 
-    # Make a list of all the hosts (if a host has more than a )
-
-    inventory = [listing[INDEX_HOST_ID] for listing in data[1:]]
+    # Make a list of all the hosts 
+        # (if a host has more than a listing, their value will be duplicated for every extra listing they have)
+    hosts = [listing[INDEX_HOST_ID] for listing in data[1:]]
 
     if room_type == "":
-        host_listings = {listing[INDEX_HOST_ID]: inventory.count(listing[INDEX_HOST_ID]) for listing in data[1:]}
+        host_listings = {listing[INDEX_HOST_ID]: hosts.count(listing[INDEX_HOST_ID]) for listing in data[1:] if listing[INDEX_HOST_ID] not in host_listings}
     else: 
-        host_listings = [listing[INDEX_PRICE] for listing in data[1:] if listing[INDEX_TYPE] == room_type]
+        host_listings = {listing[INDEX_HOST_ID]: hosts.count(listing[INDEX_HOST_ID]) for listing in data[1:] if listing[INDEX_TYPE] == room_type and listing[INDEX_HOST_ID] not in host_listings}
 
     return host_listings
-
-
-    return {}
 
 
 def run_test_code() -> None:
