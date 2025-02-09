@@ -9,7 +9,7 @@ Date: January 1, 2025
 
 # Import necessary modules
 import os
-
+import csv 
 # TODO: Define the necessary constants
 # You will need constants for host id, host name, room type, price, min. number of nights, and license
 # They can start with IDX_ or INDEX_, whatever you prefer
@@ -52,28 +52,30 @@ def read_data(path_to_csv: str | None) -> list[list[str]]:
 
 # In general, docstrings follow the format
 def function(param_1: type, param_2: type) -> type:
-    """_brief one-line summary goes here_
-
-    _*optional* longer, multi-line summary can be included here_
-    _remove if unnecessary_
+    """Read the listing data
 
     Args:
-        param_1 (type): _description_
-        param_2 (type): _description..._
-            _...rest of description indented underneath if more than 1 line_
-
+        path_to_csv (str): The path to the csv file contaning the listings 
     Returns:
-        type: _description_
-            _...rest of description indented underneath if more than 1 line_
+        list[list[str]]: The airbnb data casted in a list of lists
     """
     return param_1, param_2
 
 # TODO: Task 0: Read the data (including the first row, i.e. the column names)
 def read_data(path_to_csv: str) -> list[list[str]]:
-    """..."""
-    # Your code goes here
+    """Read the listing data
 
-    return []
+    Args:
+        path_to_csv (str): The path to the csv file contaning the listings 
+    Returns:
+        list[list[str]]: The airbnb data casted in a list of lists
+    """
+    # Your code goes here
+    # Load data using the csv reader from csv module 
+    with open(path_to_csv, 'r') as file:
+        reader = csv.reader(file)
+        data = list(reader)
+    return data 
 
 
 # TODO: Task 1: Count the number of listings that are short-term rentals (their min. number of nights is < 30).
