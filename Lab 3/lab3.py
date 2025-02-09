@@ -48,7 +48,8 @@ def read_data(path_to_csv: str) -> list[list[str]]:
         data = list(reader)
     return data 
 
-read_data("chicago_listings.csv")
+listings_csv = read_data("chicago_listings.csv")
+listings = listings_csv[1:]
 # TODO: Task 1: Count the number of listings that are short-term rentals (their min. number of nights is < 30).
 def count_short_term_rentals(data: list[list[str]]) -> int:
     """Count the number of listings in the data that are short-term rentals 
@@ -60,40 +61,85 @@ def count_short_term_rentals(data: list[list[str]]) -> int:
         int: The number of listings that are short-term rentals 
     """
     # Your code goes here
-    """" Original code
+    """
+    
     count = 0
-    for listing in data:
-        if listing[INDEX_NIGHTS] < 30:
+    for rental in data[1:]:
+        if int(rental[INDEX_NIGHTS]) < 30:
             count += 1 
     """
-    return sum(1 for listing in data if int(listing[INDEX_NIGHTS]) < 30)
-print(count_short_term_rentals("chicago_listings.csv"))
+    return sum(1 for rental in data[1:] if int(rental[INDEX_NIGHTS]) < 30)
+#print(count_short_term_rentals(listings_csv))
+
+
 # TODO: Task 2: Count listings by their room type (ignore entries with an empty room type).
 # Returns a dictionary with string keys and integer values. The keys are taken from the dataset (don't hardcode them).
 # ** Note that the dict[str, int] format means a dictionary of [<key_type>, <value_type>] pairs. **
 def count_listings_by_type(data: list[list[str]]) -> dict[str, int]:
-    """..."""
+
+    """Make an inventory of the listings by their room type
+
+    Args:
+        data list[list[str]]: a list of lists containing the listings and their properties, including room type
+
+    Returns:
+        dict[str, int]: a dictionary where keys correspond to room types, and their values to the count of that room type
+    
+    """
     # Your code goes here
+    inventory = dict()
+    for listing in data[1:]:
+        # check for empty entries 
+        if listing[INDEX_TYPE] == "" or listing[INDEX_TYPE] == None:
+            break
+        # count the room types and assign to dictionary 
+        if listing[INDEX_TYPE] in inventory:
+            inventory[listing[INDEX_TYPE]] += 1
+        else:
+            inventory[listing[INDEX_TYPE]] = 1
+    return inventory 
 
-    return {}
-
+#print(count_listings_by_type(listings_csv))
 
 # TODO: Task 3: Count the number of listings by their license type (licensed, unlicensed, pending, or exempt) (*do* hardcode the keys here).
 # Returns a dictionary with string keys and integer values. The keys are "unlicensed", "pending", "exempt", "licensed".
 def get_license_status(data: list[list[str]]) -> dict[str, int]:
-    """..."""
+    """Make an inventory of the listings by their license type
+
+    Args:
+        data list[list[str]]: a list of lists containing the listings and their properties, including license type
+
+    Returns:
+        dict[str, int]: a dictionary where keys correspond to room license, and their values to the count of that license type
+    """
     # For consistency of grading, let's assume that:
     # 1. An entry that is empty is considered unlicensed
-    # 2. An entry that has 'pending' anywhere in the license is considered pending (case insensitive)
+    # 2. An entry that has 'pending' anywhere in the license is considered pending
     # 3. An entry that has either '32+', '32-', '32 +', or '32 -' in the license is considered exempt
     # 4. Anything that is neither pending nor exempt nor unlicensed is considered licensed
     #
     # Some of your values might be different from those on Inside Airbnb, but pending and unlicensed should match
 
     # Your code goes here
+    # Initialize a dictionary with keys hardcoded:
+        # set initial count to zero
+    inventory = {"unlicensed":0, "pending":0, "exempt":0, "licensed":0} 
 
-    return {}
-
+    # Loop through the listings data and allocate a +1 count to each license type
+    for listing in data[1:]:
+        # check with if statements for all types according to specs above 
+        if listing[INDEX_LICENSE] == None or listing[INDEX_LICENSE] == "":
+            inventory["unlicensed"] += 1 
+        elif 'pending' in listing[INDEX_LICENSE]: 
+            inventory["pending"] += 1 
+        elif '32+' in listing[INDEX_LICENSE] or '32 +' in listing[INDEX_LICENSE] or '32-' in listing[INDEX_LICENSE] or '32 -'in listing[INDEX_LICENSE]:
+            #print(listing[INDEX_LICENSE])
+            #print(listing[INDEX_NEIGHBORHOOD])
+            inventory["exempt"] += 1 
+        else: 
+            inventory["licensed"] += 1 
+    return inventory
+#print(get_license_status(listings_csv))
 
 # TODO: Task 4: Count the number of listings that are by hosts who have multiple listings.
 # Returns the number of listings by hosts with multiple listings (they have > 1 listing).
@@ -101,12 +147,18 @@ def get_license_status(data: list[list[str]]) -> dict[str, int]:
 # Refer to the "Listings Per Hosts" section on https://insideairbnb.com/chicago/.
 # We are looking for what is referred to as the number of multi-listings.
 def count_multi_listings(data: list[list[str]]) -> int:
-    """..."""
+    """Counts the number of hosts who have multiple listings
+    Args:
+        data list[list[str]]: a list of listings with characteristics, including host_id
+        
+    Returns: 
+        int: the total number of hosts who have more than 1 listing on Airbnb
+    """
     # Your code goes here
-
-    return 0
-
-
+    inventory = [listing[INDEX_HOST_ID] for listing in data[1:]]
+    count = [h_id for h_id in inventory if inventory.count(h_id) > 1]
+    #print(count)
+    return len(count)
 # TODO: Task 5: Count the number of listings that are by hosts who have i listings, where 0 <= i <= 10.
 # Returns a list of 11 integers where for every number i from 0 to 10...
 #   the element at index i describes how many listings are from hosts with i listings.
