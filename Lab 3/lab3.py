@@ -204,9 +204,11 @@ def count_listings_by_host_count(data: list[list[str]]) -> list[int]:
 # In the second case, the room_type will default to ""
 def get_prices(data: list[list[str]], room_type: str = "") -> list[float]:
     """Find prices by returning a list that contains all listing prices
-    
+
     Args: 
         data list[list[str]]: a list of listings with characteristics, including listing price
+        room_type (str): a filter option to filter by room_type
+            defaults to an empty string if it's not printed 
         
     Returns:
         list[float]: A list with all listing prices from the data
@@ -220,9 +222,15 @@ def get_prices(data: list[list[str]], room_type: str = "") -> list[float]:
     # Don't worry about this, skip empty prices instead
 
     # Your code goes here
+    prices = list()
+    if room_type == "":
+        prices = [listing[INDEX_PRICE] for listing in data[1:]]
+    else: 
+        prices = [listing[INDEX_PRICE] for listing in data[1:] if listing[INDEX_TYPE] == room_type]
 
-    return []
+    return prices
 
+#print(get_prices(listings_csv, "Private room"))
 
 # TODO: Task 7: Get the host name associated with the given query_id.
 # Returns the host name or "Name not found" if there is no host with that query_id.
