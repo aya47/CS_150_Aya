@@ -32,6 +32,7 @@ INDEX_LAST_REVIEW = 11
 INDEX_REVIEWS_MONTH = 12
 INDEX_LICENSE = 15
 
+
 # TODO: Task 0: Read the data (including the first row, i.e. the column names)
 def read_data(path_to_csv: str) -> list[list[str]]:
     """Read the listing data
@@ -171,10 +172,19 @@ def count_listings_by_host_count(data: list[list[str]]) -> list[int]:
     """..."""
     listing_counts = [0] * 11  # [0, 0,...0]
 
+    inventory = [listing[INDEX_HOST_ID] for listing in data[1:]]
+    count = list()
+
     # Your code goes here
-
+    for i in range(len(listing_counts)): 
+        if i != 10:
+            count = [h_id for h_id in inventory if inventory.count(h_id) == i and h_id not in count]
+            listing_counts[i] = len(count)
+        if i == 10:
+            count = [h_id for h_id in inventory if inventory.count(h_id) >= i and h_id not in count]
+            listing_counts[i] = len(count)
     return listing_counts
-
+#print(count_listings_by_host_count(listings))
 
 # TODO: Task 6: Return a list containing listing prices, excluding empty prices.
 # The room type is an optional parameter. It's what to filter the listings by.
