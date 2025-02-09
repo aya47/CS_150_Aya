@@ -323,85 +323,85 @@ def run_test_code() -> None:
     f.write("(Data as of December 18, 2024)\n")
     f.write("*" * 31)
 
-    # # Test Task 0
-    # listings = read_data(FILE_NAME_INPUT)[1:]  # We skip the first row here
-    # n = len(listings)
-    # assert isinstance(listings[0], list), "listings should be a list of lists"
-    # assert isinstance(listings[0][1], str), "listings should be a list of lists of strings"
-    # assert n > 0, "listings should have at least one entry"
-    # f.write(f"\n\nTotal listings: {n:,}\n")
+    # Test Task 0
+    listings = read_data(FILE_NAME_INPUT)[1:]  # We skip the first row here
+    n = len(listings)
+    assert isinstance(listings[0], list), "listings should be a list of lists"
+    assert isinstance(listings[0][1], str), "listings should be a list of lists of strings"
+    assert n > 0, "listings should have at least one entry"
+    f.write(f"\n\nTotal listings: {n:,}\n")
 
-    # # Test Task 1
-    # strs = count_short_term_rentals(listings)
-    # assert isinstance(strs, int), "count_short_term_rentals() should return an integer"
-    # f.write("\nListings that are:")
-    # f.write(
-    #     f"\nShort-term rentals : {strs:,} ({round(((strs/n)*100),1)}%)"
-    #     f"\nLonger-term rentals: {n-strs:,} ({round((((n-strs)/n)*100),1)}%)\n\n"
-    # )
+    # Test Task 1
+    strs = count_short_term_rentals(listings)
+    assert isinstance(strs, int), "count_short_term_rentals() should return an integer"
+    f.write("\nListings that are:")
+    f.write(
+        f"\nShort-term rentals : {strs:,} ({round(((strs/n)*100),1)}%)"
+        f"\nLonger-term rentals: {n-strs:,} ({round((((n-strs)/n)*100),1)}%)\n\n"
+    )
 
-    # # Test Task 2
-    # listings_type = count_listings_by_type(listings)
-    # assert isinstance(listings_type, dict), "count_listings_by_type should return a dictionary"
-    # assert "Private room" in listings_type, "count_listings_by_type should include string keys 'Private room'"
-    # assert sum(list(listings_type.values())) == len(listings), "all listings should be accounted for"
-    # f.write("Listings with room type:\n")
-    # for listing, count in sorted(listings_type.items(), key=lambda item: -item[1]):
-    #     f.write(f"{listing:<15}: {count:,} ({round(((count/n)*100),1)}%)\n")
+    # Test Task 2
+    listings_type = count_listings_by_type(listings)
+    assert isinstance(listings_type, dict), "count_listings_by_type should return a dictionary"
+    assert "Private room" in listings_type, "count_listings_by_type should include string keys 'Private room'"
+    assert sum(list(listings_type.values())) == len(listings), "all listings should be accounted for"
+    f.write("Listings with room type:\n")
+    for listing, count in sorted(listings_type.items(), key=lambda item: -item[1]):
+        f.write(f"{listing:<15}: {count:,} ({round(((count/n)*100),1)}%)\n")
 
-    # # Test Task 3
-    # license_status = get_license_status(listings)
-    # assert isinstance(license_status, dict), "get_license_status should return a dictionary"
-    # assert "exempt" in license_status, "get_license_status should have string keys 'licensed', 'unlicensed', 'exempt',and 'pending'"
-    # assert sum(list(license_status.values())) == len(listings), "check the values returned by get_license_status"
-    # unlicensed = license_status["unlicensed"] + license_status["pending"]
-    # f.write(
-    #     f"\nNumber of unlicensed current listings, at least {unlicensed:,} ({round(((unlicensed/n)*100),1)}%); "
-    #     f"including {license_status['unlicensed']:,} with missing license and {license_status['pending']:,} pending\n"
-    # )
+    # Test Task 3
+    license_status = get_license_status(listings)
+    assert isinstance(license_status, dict), "get_license_status should return a dictionary"
+    assert "exempt" in license_status, "get_license_status should have string keys 'licensed', 'unlicensed', 'exempt',and 'pending'"
+    assert sum(list(license_status.values())) == len(listings), "check the values returned by get_license_status"
+    unlicensed = license_status["unlicensed"] + license_status["pending"]
+    f.write(
+        f"\nNumber of unlicensed current listings, at least {unlicensed:,} ({round(((unlicensed/n)*100),1)}%); "
+        f"including {license_status['unlicensed']:,} with missing license and {license_status['pending']:,} pending\n"
+    )
 
-    # for status, count in sorted(license_status.items(), key=lambda item: -item[1]):
-    #     f.write(f"{status:<10}: {count:,}\n")
+    for status, count in sorted(license_status.items(), key=lambda item: -item[1]):
+        f.write(f"{status:<10}: {count:,}\n")
 
-    # # Test Task 4
-    # multihosts = count_multi_listings(listings)
-    # assert isinstance(multihosts, int), "count_multi_listings should return an integer"
-    # f.write(
-    #     f"\nNumber of listings by hosts with multiple listings: {multihosts:,} out of {n:,} total listings "
-    #     f"({round(((multihosts/n)*100),1)}%)\n\n"
-    # )
+    # Test Task 4
+    multihosts = count_multi_listings(listings)
+    assert isinstance(multihosts, int), "count_multi_listings should return an integer"
+    f.write(
+        f"\nNumber of listings by hosts with multiple listings: {multihosts:,} out of {n:,} total listings "
+        f"({round(((multihosts/n)*100),1)}%)\n\n"
+    )
 
-    # # Test Task 5
-    # counts = count_listings_by_host_count(listings)
-    # assert counts[0] == 0, "No host has 0 listings, otherwise they wouldn't be in the data"
-    # assert counts[1] == len(listings) - count_multi_listings(listings), "Single listing count incorrect"
+    # Test Task 5
+    counts = count_listings_by_host_count(listings)
+    assert counts[0] == 0, "No host has 0 listings, otherwise they wouldn't be in the data"
+    assert counts[1] == len(listings) - count_multi_listings(listings), "Single listing count incorrect"
 
-    # assert sum(counts) == len(listings), "Number of listings per hosts computed incorrectly"
-    # f.write(f"Listings by hosts with 1 listing   : {counts[1]:,}\n")
-    # for i in range(2, len(counts) - 1):
-    #     f.write(f"Listings by hosts with {i} listings  : {counts[i]:,}\n")
-    # f.write(f"Listings by hosts with 10+ listings: {counts[10]:,}\n")
+    assert sum(counts) == len(listings), "Number of listings per hosts computed incorrectly"
+    f.write(f"Listings by hosts with 1 listing   : {counts[1]:,}\n")
+    for i in range(2, len(counts) - 1):
+        f.write(f"Listings by hosts with {i} listings  : {counts[i]:,}\n")
+    f.write(f"Listings by hosts with 10+ listings: {counts[10]:,}\n")
 
-    # # Test Task 6
-    # prices = get_prices(listings)
-    # assert isinstance(prices, list), "get_prices should return a list"
-    # assert isinstance(prices[0], float), "get_prices should return a list of floats"
+    # Test Task 6
+    prices = get_prices(listings)
+    assert isinstance(prices, list), "get_prices should return a list"
+    assert isinstance(prices[0], float), "get_prices should return a list of floats"
 
-    # f.write("\n-----Analyzing prices-----\n")
+    f.write("\n-----Analyzing prices-----\n")
 
-    # f.write(f"{len(prices):,} prices in the list\n")
-    # if len(prices) > 0:  # Avoiding division by 0
-    #     average = sum(prices) / len(prices)
-    #     f.write(f"Average listing price ${average:.02f}\n")
-    #     f.write(f"Median listing price  ${statistics.median(prices):.02f}\n")
+    f.write(f"{len(prices):,} prices in the list\n")
+    if len(prices) > 0:  # Avoiding division by 0
+        average = sum(prices) / len(prices)
+        f.write(f"Average listing price ${average:.02f}\n")
+        f.write(f"Median listing price  ${statistics.median(prices):.02f}\n")
 
-    # f.write("\n")
-    # home_prices = get_prices(listings, "Entire home/apt")
-    # f.write(f"{len(home_prices):,} prices for Entire home/apt\n")
-    # if len(home_prices) > 0:  # Avoiding division by 0
-    #     average = sum(home_prices) / len(home_prices)
-    #     f.write(f"Average entire apt price ${average:.02f}\n")
-    #     f.write(f"Median entire apt price  ${statistics.median(home_prices):.02f}\n")
+    f.write("\n")
+    home_prices = get_prices(listings, "Entire home/apt")
+    f.write(f"{len(home_prices):,} prices for Entire home/apt\n")
+    if len(home_prices) > 0:  # Avoiding division by 0
+        average = sum(home_prices) / len(home_prices)
+        f.write(f"Average entire apt price ${average:.02f}\n")
+        f.write(f"Median entire apt price  ${statistics.median(home_prices):.02f}\n")
 
     # # TODO: Test Task 7
     # # Add at a call to get_host_name_by_id and at least three assert statements
@@ -411,21 +411,21 @@ def run_test_code() -> None:
     assert get_host_name_by_id(listings_csv, " ") == "Name not found", "Should return 'Name not found' for host_id ' ' "
 
 
-    # # Test Task 8
-    # # Get names of hosts and their listings
-    # listing_counts = listings_per_host_with_type(listings)
-    # assert sum(list(listing_counts.values())) == len(listings), "Number of listings per host computed incorrectly"
-    # # Get top ten listing counts
-    # top_hosts = sorted(listing_counts.items(), key=lambda item: item[1], reverse=True)[:10]
-    # f.write(f"\n-----Top {len(top_hosts)} hosts with the largest number of listings-----\n")
-    # for host_id, count in top_hosts:
-    #     f.write(f"{get_host_name_by_id(listings, host_id):<17} has {count}\n")
+    # Test Task 8
+    # Get names of hosts and their listings
+    listing_counts = listings_per_host_with_type(listings)
+    assert sum(list(listing_counts.values())) == len(listings), "Number of listings per host computed incorrectly"
+    # Get top ten listing counts
+    top_hosts = sorted(listing_counts.items(), key=lambda item: item[1], reverse=True)[:10]
+    f.write(f"\n-----Top {len(top_hosts)} hosts with the largest number of listings-----\n")
+    for host_id, count in top_hosts:
+        f.write(f"{get_host_name_by_id(listings, host_id):<17} has {count}\n")
 
-    # listing_counts = listings_per_host_with_type(listings, "Entire home/apt")
-    # top_hosts = sorted(listing_counts.items(), key=lambda item: item[1], reverse=True)[:10]
-    # f.write(f"\n-----Top {len(top_hosts)} hosts with largest number of entire home listings-----\n")
-    # for host_id, count in top_hosts:
-    #     f.write(f"{get_host_name_by_id(listings, host_id):<17} has {count}\n")
+    listing_counts = listings_per_host_with_type(listings, "Entire home/apt")
+    top_hosts = sorted(listing_counts.items(), key=lambda item: item[1], reverse=True)[:10]
+    f.write(f"\n-----Top {len(top_hosts)} hosts with largest number of entire home listings-----\n")
+    for host_id, count in top_hosts:
+        f.write(f"{get_host_name_by_id(listings, host_id):<17} has {count}\n")
 
     f.close()
 
