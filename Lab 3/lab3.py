@@ -235,10 +235,27 @@ def get_prices(data: list[list[str]], room_type: str = "") -> list[float]:
 # TODO: Task 7: Get the host name associated with the given query_id.
 # Returns the host name or "Name not found" if there is no host with that query_id.
 def get_host_name_by_id(data: list[list[str]], query_id: str) -> str:
-    """..."""
+    """Find the name of the host given their id 
+    
+    Args:
+        data list[list[str]]: a list of listings with characteristics, including host name and id
+        query_id (str): the desired host_id to get the name for
+        
+    Returns:
+        str: name of the host with the given host ID within the listings data provided 
+    """
     # Your code goes here
 
-    return "Name not found"
+    # Make a dictionary where:
+        #  keys correspond to host_id 
+        #  values correspond to host name  
+    hosts = {listing[INDEX_HOST_ID] :listing[INDEX_HOST_NAME] for listing in data }
+    if query_id in hosts:
+        host_name = hosts[query_id]
+    else:
+        host_name = "Name not found"
+
+    return host_name 
 
 
 # TODO: Task 8: Get the number of listings per host.
