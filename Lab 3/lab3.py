@@ -3,20 +3,18 @@
 Note that you can incorporate the given comments into your docstrings!
 See docs.py for help and examples.
 
-Author(s): Author 1, Author 2
-Date: January 1, 2025
+Author(s): Aya Ben Saghroune
+Date: Feb 5, 2025
 """
 
 # Import necessary modules
+import csv
 import os
-import csv 
 import statistics
 
 # TODO: Define the necessary constants
 # You will need constants for host id, host name, room type, price, min. number of nights, and license
 # They can start with IDX_ or INDEX_, whatever you prefer
-
-# Your code for constant definitions goes here
 
 # Your code for constant definitions goes here
 INDEX_LISTING_ID = 0
@@ -33,7 +31,6 @@ INDEX_REVIEWS = 10
 INDEX_LAST_REVIEW = 11
 INDEX_REVIEWS_MONTH = 12
 INDEX_LICENSE = 15
-
 
 # TODO: Task 0: Read the data (including the first row, i.e. the column names)
 def read_data(path_to_csv: str) -> list[list[str]]:
@@ -63,6 +60,7 @@ def count_short_term_rentals(data: list[list[str]]) -> int:
         int: The number of listings that are short-term rentals 
     """
     # Your code goes here
+
     return sum(1 for rental in data if int(rental[INDEX_NIGHTS]) < 30)
 
 # TODO: Task 2: Count listings by their room type (ignore entries with an empty room type).
@@ -121,11 +119,9 @@ def get_license_status(data: list[list[str]]) -> dict[str, int]:
         # check with if statements for all types according to specs above 
         if listing[INDEX_LICENSE] == None or listing[INDEX_LICENSE] == "":
             inventory["unlicensed"] += 1 
-        elif 'pending' in listing[INDEX_LICENSE]: 
+        elif 'pending' in listing[INDEX_LICENSE].lower(): 
             inventory["pending"] += 1 
         elif '32+' in listing[INDEX_LICENSE] or '32 +' in listing[INDEX_LICENSE] or '32-' in listing[INDEX_LICENSE] or '32 -'in listing[INDEX_LICENSE]:
-            #print(listing[INDEX_LICENSE])
-            #print(listing[INDEX_NEIGHBORHOOD])
             inventory["exempt"] += 1 
         else: 
             inventory["licensed"] += 1 
@@ -265,15 +261,20 @@ def listings_per_host_with_type(data: list[list[str]], room_type: str = "") -> d
     """
     # Your code goes here
     host_listings = dict()
+    # check for room type value
+    if room_type != "":
+        # Make a new data set that has only listings with the specified room type 
+        new_data = [listing for listing in data if listing[INDEX_TYPE]== room_type]
+    else:
+        new_data = data 
 
-    # Make a list of all the hosts 
-        # (if a host has more than a listing, their value will be duplicated for every extra listing they have)
-    hosts = [listing[INDEX_HOST_ID] for listing in data]
-
-    if room_type == "":
-        host_listings = {listing[INDEX_HOST_ID]: hosts.count(listing[INDEX_HOST_ID]) for listing in data if listing[INDEX_HOST_ID] not in host_listings}
-    else: 
-        host_listings = {listing[INDEX_HOST_ID]: hosts.count(listing[INDEX_HOST_ID]) for listing in data if listing[INDEX_TYPE] == room_type and listing[INDEX_HOST_ID] not in host_listings}
+    
+    for listing in new_data:
+        host = listing[INDEX_HOST_ID]
+        if host not in host_listings:
+            host_listings[host] = 1
+        else:
+            host_listings[host] += 1 
 
     return host_listings
 
