@@ -24,7 +24,7 @@ Date: TODO (write me!): February 16, 2025
 import random
 import statistics
 import time
-
+import math
 
 class Student:
     """A class to represent a student and their preferences for partners.
@@ -91,9 +91,10 @@ class Student:
     # Return the student's name and the partner's name,
     #   or "no-one" if there is no partner yet.
     # Making a useful str function helps with debugging by
-    # allowing you to quickly see useful information.
+    # allowing you to quickly see useful information. 
+    # Test Failed: 'Jacob (Amy (no-one))' != 'Jacob (Amy)'
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Stringify this Student.
 
         If this student's name is Jake, with no partner:
@@ -107,12 +108,12 @@ class Student:
         if self.partner == None:
             return f"{self.name} (no-one)"
         else:
-            return f"{self.name} ({self.partner})"
+            return f"{self.name} ({self.partner.name})"
         
     # ------------------------------------------------------
     # Task 2: Implement has_partner.
 
-    def has_partner(self, partner) -> bool:
+    def has_partner(self) -> bool:
         """Determine whether this student has a partner.
 
         Returns:
@@ -177,7 +178,7 @@ class Student:
         else:
             # Get the list of rating of the specified object 
             list_of_ratings = self.partner_ratings
-            return list_of_ratings.index(self.partner) 
+            return list_of_ratings.index(self.partner.name) 
     # ------------------------------------------------------
     # Task 5: Implement break_partnership.
     # If we have a partner, then set our partner's partner to None.
@@ -534,7 +535,6 @@ if __name__ == "__main__":
 
     print("-" * 50 + "\nTest basic student creation\n")
 
-    """
     # Create some test students, with names and rankings of prefered partners
     s0 = Student(None, "Jason", ["Rachael", "Ryan", "Riley", "Richard"])
     s1 = Student(None, "Joy", ["Rachael", "Ryan", "Richard", "Riley"])
@@ -735,4 +735,3 @@ if __name__ == "__main__":
 
     assert gs_result["a"] > gs_result["b"], "We expect GS algorithm to be biased in favor of group A"
     assert math.isclose(gs_result["all"], 0.812, abs_tol=0.05), "We expect an average of about .812 for this size group"
-    """
