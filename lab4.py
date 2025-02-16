@@ -17,8 +17,8 @@ This is common in real-world code. You will have to rely
 on printing out information and asking yourself questions:
 "Is this the best set of partnerships that could be found?"
 
-Author(s): TODO (write me!): Author 1, Author 2
-Date: TODO (write me!): January 1, 2025
+Author(s): TODO (write me!): Aya Ben Saghroune
+Date: TODO (write me!): February 16, 2025
 """
 
 import random
@@ -69,7 +69,7 @@ class Student:
     # If "Args:" and/or "Returns:" are missing in a function docstring,
     # this means there are no arguments and/or that it returns nothing (None).
 
-    # __init__(self, group, name, partner_ratings):
+    def __init__(self, group, name, partner_ratings):
         """Initialize this Student by storing arguments as attributes.
 
         Set partner to None.
@@ -80,6 +80,10 @@ class Student:
             partner_ratings (list[str]): This student's preferred partners
                 (e.g. ["Alice", "Adam", "Anya", "Allen"] <- prefers "Allen" *the most*).
         """
+        self.group = group
+        self.name = name
+        self.partner_ratings = partner_ratings 
+        self.partner = None 
 
     # ------------------------------------------------------
     # Task 1: Create an __str__ method for this Student class.
@@ -89,7 +93,7 @@ class Student:
     # Making a useful str function helps with debugging by
     # allowing you to quickly see useful information.
 
-    # __str__(self):
+    def __str__(self):
         """Stringify this Student.
 
         If this student's name is Jake, with no partner:
@@ -100,7 +104,11 @@ class Student:
         Returns:
             str: This student's string representation.
         """
-
+        if self.partner == None:
+            return f"{self.name} (no-one)"
+        else:
+            return f"{self.name} ({self.partner})"
+        
     # ------------------------------------------------------
     # Task 2: Implement has_partner.
 
