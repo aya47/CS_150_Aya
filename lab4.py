@@ -112,11 +112,16 @@ class Student:
     # ------------------------------------------------------
     # Task 2: Implement has_partner.
 
+    def has_partner(self, partner) -> bool:
         """Determine whether this student has a partner.
 
         Returns:
             bool: True if has a partner, False otherwise.
         """
+        if self.partner != None:
+            return True
+        else:
+            return False 
 
     # ------------------------------------------------------
     # Task 3: Implement get_rating_of_name.
@@ -142,6 +147,19 @@ class Student:
         Returns:
             int: The rating of the given student.
         """
+    def get_rating_of_name(self, name) -> int:
+        """Get the rating of the given student.
+
+        Args:
+            name (str): This student's name.
+
+        Returns:
+            int: The rating of the given student.
+        """
+        # Get the list of rating of the specified object 
+        list_of_ratings = self.partner_ratings
+        # Return the index using a list method 
+        return list_of_ratings.index(name) 
 
     # ------------------------------------------------------
     # Task 4: Implement get_rating_of_current_partner.
