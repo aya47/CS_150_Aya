@@ -165,13 +165,19 @@ class Student:
     # Task 4: Implement get_rating_of_current_partner.
     # If there is no current partner, return -1.
     # Otherwise, return the rating for our current partner.
-
+        
+    def get_rating_of_current_partner(self) -> int:
         """Get the rating of the current partner.
 
         Returns:
             int: The rating of this student's current partner.
         """
-
+        if self.partner == None:
+            return -1
+        else:
+            # Get the list of rating of the specified object 
+            list_of_ratings = self.partner_ratings
+            return list_of_ratings.index(self.partner) 
     # ------------------------------------------------------
     # Task 5: Implement break_partnership.
     # If we have a partner, then set our partner's partner to None.
