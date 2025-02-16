@@ -183,8 +183,16 @@ class Student:
     # Task 5: Implement break_partnership.
     # If we have a partner, then set our partner's partner to None.
     # Then, set our partner to None.
-
+    def break_partnership(self):
         """Break this student's partnership."""
+        if self.partner != None: #have a partner
+            # first break partner of partner
+                # Get partner
+            current_partner = self.partner
+            if current_partner.partner != None:
+                current_partner.partner = None
+            # then, 
+            self.partner = None
 
     # ------------------------------------------------------
     # Task 6: Implement make_partnership.
