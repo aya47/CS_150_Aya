@@ -140,14 +140,6 @@ class Student:
     # to find the index of an element in a list:
     # https://www.programiz.com/python-programming/methods/list.
 
-        """Get the rating of the given student.
-
-        Args:
-            name (str): This student's name.
-
-        Returns:
-            int: The rating of the given student.
-        """
     def get_rating_of_name(self, name) -> int:
         """Get the rating of the given student.
 
@@ -200,12 +192,21 @@ class Student:
     # If we already have a partner, we need to break up.
     # If the new_partner already has a partner, we need to break them up too.
     # Then set this person as our partner, and set us as this person's partner.
-
+    def make_partnership(self, new_partner):
         """Form a partnership with this person.
 
         Args:
             new_partner (Student): The student to partner with.
         """
+        # first, break off current partnership by using the method break_partnership()
+        self.break_partnership()
+        new_partner.break_partnership()
+
+        # Now set partnerships
+        self.partner = new_partner
+        new_partner.partner = self 
+
+
 
     # ------------------------------------------------------
     # Task 8: Implement propose_to_top_choice.
