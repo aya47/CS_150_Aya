@@ -206,8 +206,6 @@ class Student:
         self.partner = new_partner
         new_partner.partner = self 
 
-
-
     # ------------------------------------------------------
     # Task 8: Implement propose_to_top_choice.
     # This student is going to propose a partnership with their
@@ -243,8 +241,24 @@ class Student:
     #
     # * Review the get_rating_of_name(), get_rating_of_current_partner(),
     # * make_partnership(), and Group.get_student_by_name() methods.
-
+    def propose_to_top_choice(self):
         """Propose a partnership to our top choice."""
+        new_partner = (self.to_propose).pop()
+        # case 1: no partner yet -> accept proposal
+        if not self.has_partner():
+            self.make_partnership(new_partner)
+        # Next two cases under the same elif statement
+        else: 
+            # case 2: new is preferred more than current 
+            # get current partner
+            if self.get_rating_of_name(new_partner) < self.get_rating_of_current_partner():
+                # replace current partner with new 
+                self.make_partnership(new_partner)
+
+            # Case 3: new is preferred less than current
+                # don't change anything
+                # I already popped the potential partner at the beginning 
+
 
 
 class Group:
