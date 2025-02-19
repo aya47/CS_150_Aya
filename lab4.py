@@ -105,7 +105,7 @@ class Student:
         Returns:
             str: This student's string representation.
         """
-        if self.partner == None:
+        if self.partner is None:
             return f"{self.name} (no-one)"
         else:
             return f"{self.name} ({self.partner.name})"
@@ -119,7 +119,7 @@ class Student:
         Returns:
             bool: True if has a partner, False otherwise.
         """
-        if self.partner != None:
+        if self.partner is not None:
             return True
         else:
             return False 
@@ -246,15 +246,16 @@ class Student:
         new_partner_name = (self.to_propose).pop()
         new_partner = self.group.get_student_by_name(new_partner_name)
         # case 1: no partner yet -> accept proposal
-        if not self.has_partner():
-            self.make_partnership(new_partner)
+        if not new_partner.has_partner():
+            new_partner.make_partnership(self)
         # Next two cases under the same elif statement
         else: 
             # case 2: new is preferred more than current 
             # get current partner
-            if self.get_rating_of_name(new_partner.name) > self.get_rating_of_current_partner():
+            current_partner = new_partner.partner
+            if new_partner.get_rating_of_name(self.name) > new_partner.get_rating_of_current_partner():
                 # replace current partner with new 
-                self.make_partnership(new_partner)
+                new_partner.make_partnership(self)
 
             # Case 3: new is preferred less than current
                 # don't change anything
@@ -760,5 +761,4 @@ if __name__ == "__main__":
     print_test_result(gs_result)
 
     assert gs_result["a"] > gs_result["b"], "We expect GS algorithm to be biased in favor of group A"
-    print(gs_result["all"])
     assert math.isclose(gs_result["all"], 0.812, abs_tol=0.05), "We expect an average of about .812 for this size group"
