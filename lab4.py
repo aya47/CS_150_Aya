@@ -243,7 +243,8 @@ class Student:
     # * make_partnership(), and Group.get_student_by_name() methods.
     def propose_to_top_choice(self):
         """Propose a partnership to our top choice."""
-        new_partner = (self.to_propose).pop()
+        new_partner_name = (self.to_propose).pop()
+        new_partner = self.group.get_student_by_name(new_partner_name)
         # case 1: no partner yet -> accept proposal
         if not self.has_partner():
             self.make_partnership(new_partner)
@@ -251,7 +252,7 @@ class Student:
         else: 
             # case 2: new is preferred more than current 
             # get current partner
-            if self.get_rating_of_name(new_partner) < self.get_rating_of_current_partner():
+            if self.get_rating_of_name(new_partner.name) > self.get_rating_of_current_partner():
                 # replace current partner with new 
                 self.make_partnership(new_partner)
 
@@ -351,7 +352,9 @@ class Group:
         e.g. student_a[i] is paired with student_b[i].
         Break up all partnerships first.
         """
-        ...
+        self.break_all_partnerships()
+        for i, s in enumerate(self.students_a):
+            s.make_partnership(self.students_b[i])
 
     def get_unpartnered(self):
         """Find students who don't have a partner.
@@ -757,4 +760,5 @@ if __name__ == "__main__":
     print_test_result(gs_result)
 
     assert gs_result["a"] > gs_result["b"], "We expect GS algorithm to be biased in favor of group A"
+    print(gs_result["all"])
     assert math.isclose(gs_result["all"], 0.812, abs_tol=0.05), "We expect an average of about .812 for this size group"
