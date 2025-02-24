@@ -1,5 +1,7 @@
 """
 Contraption definitions for Cats vs Homework
+Author: Aya Ben Saghroune
+Edit Date: Wednesday, February 27th, 2025
 """
 
 from src.managers import Cat
