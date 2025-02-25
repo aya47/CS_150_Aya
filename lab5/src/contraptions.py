@@ -33,15 +33,17 @@ class SnackDispenser(Contraption):
     # You may find adding new methods (and perhaps a field) to be helpful
     def __init__(self):
         super().__init__('snacks', 4)
+        self.round = 0
 
-    def end_round(self):
+    def interact(self):
         next = self._tile.entrance()
-        if isinstance(next.actor(), Cat): # if a cat is next to the contraction
-            for i in range(5): #5 interactions per round
-                next.actor().distract(0) #the cat should not be distracted, so what do i do? I set the distraction int to zero for now
-            self.interact()
-            next = next.entrance()
-            
+        while next is not None:
+            if isinstance(next.actor(), Cat):
+                self.round += 1
+        if self.round == 5:
+            self._tile.clear_actor()
+            self._tile = None
+            GameManager.manager().remove_contraption(self) 
 
 class BatteryCharger(Contraption):
     """
