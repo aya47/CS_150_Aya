@@ -76,9 +76,10 @@ class BallThrower(Contraption):
 
     def end_round(self):
         next = self._tile.entrance()
-        for i in range(3):
+        for i in range(2):
             if next is not None and isinstance(next.actor(), Cat):
                 next.actor()._attention -= 1
+                break
             elif next is not None and not isinstance(next.actor(), Cat):
                 next = next.entrance()
             next = next.entrance()
