@@ -37,7 +37,6 @@ class SnackDispenser(Contraption):
 
     def interact(self):
         next = self._tile.entrance()
-        
         self.round += 1
         if self.round == 5:
             self._tile.clear_actor()
@@ -60,9 +59,7 @@ class BatteryCharger(Contraption):
         super().__init__('charger', 3)
         self.round = 0
     def end_round(self):
-        
         if self.round %2 != 0:
-        #if self.round % 2 != 0:
             GameManager.manager().add_batteries(1)
         self.round += 1
         
