@@ -25,12 +25,22 @@ class Calico(Cat):
     # TODO: Part 2: implement this class!
     # You may find adding new methods to be helpful
     def __init__(self, initial_rest_time : int):
-        super().__init__('calico', 1, 1, initial_rest_time)
+        super().__init__('calico', 4, 4, initial_rest_time)
         #assert False, "Calico unimplemented"
-    def end_round(self):
+    def distract(self, amount):
+        if self.attention ==0:
+            self.initial_rest_time += 1
+
+        self._attention -= amount
+        if self._attention <= 0:
+            self._attention = 0
+            self._rest_time = self._needed_rest_time
+            self.remove_from_board()
+        
         # when cat rests, add 1 to its _starting_attention
-        if not Cat.Calico.is_on_board():
+        if not self.is_on_board():
             self._starting_attention += 1
+        
 
 
 
@@ -42,5 +52,9 @@ class Kitten(Cat):
     # TODO: Part 2:  implement this class!
     # You may find adding new methods to be helpful
     def __init__(self, initial_rest_time : int):
-        super().__init__('kitten', 1, 1, 0)
-        assert False, "Kitten unimplemented"
+        super().__init__('kitten', 3, 6, initial_rest_time)
+        #assert False, "Kitten unimplemented"
+
+    def end_round(self):
+        self.super().end_round()
+        self.super().end_round()

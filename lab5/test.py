@@ -384,6 +384,7 @@ def test_calico_distracted(test):
     cat.end_round()
     eq_test(True, cat.is_on_board(), test)
     eq_test(4, cat.attention(), test)
+    
 
     # distract the cat
     cat.distract(4)
