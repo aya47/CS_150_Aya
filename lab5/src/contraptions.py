@@ -37,9 +37,8 @@ class SnackDispenser(Contraption):
 
     def interact(self):
         next = self._tile.entrance()
-        while next is not None:
-            if isinstance(next.actor(), Cat):
-                self.round += 1
+        
+        self.round += 1
         if self.round == 5:
             self._tile.clear_actor()
             self._tile = None
@@ -59,6 +58,12 @@ class BatteryCharger(Contraption):
 
     def __init__(self):
         super().__init__('charger', 3)
+        self.round = 0
+    def end_round(self):
+        if GameManager.manager()._rounds %2 != 0:
+        #if self.round % 2 != 0:
+            GameManager.manager().add_batteries(1)
+        
 
 class BallThrower(Contraption):
     """
