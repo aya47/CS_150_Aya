@@ -60,9 +60,11 @@ class BatteryCharger(Contraption):
         super().__init__('charger', 3)
         self.round = 0
     def end_round(self):
-        if GameManager.manager()._rounds %2 != 0:
+        
+        if self.round %2 != 0:
         #if self.round % 2 != 0:
             GameManager.manager().add_batteries(1)
+        self.round += 1
         
 
 class BallThrower(Contraption):
