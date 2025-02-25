@@ -79,7 +79,8 @@ class BallThrower(Contraption):
         for i in range(2):
             if next is not None and isinstance(next.actor(), Cat):
                 next.actor()._attention -= 1
+                next = next.entrance()
                 break
             elif next is not None and not isinstance(next.actor(), Cat):
                 next = next.entrance()
-            next = next.entrance()
+            
