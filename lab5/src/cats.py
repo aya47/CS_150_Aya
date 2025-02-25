@@ -41,9 +41,6 @@ class Calico(Cat):
         if not self.is_on_board():
             self._starting_attention += 1
         
-
-
-
 class Kitten(Cat):
     """
     Especially energetic, kittens get to take two moves _per turn_
@@ -56,5 +53,13 @@ class Kitten(Cat):
         #assert False, "Kitten unimplemented"
 
     def end_round(self):
-        self.super().end_round()
-        self.super().end_round()
+        """
+        Runs the behavior of this cat for the end of the round
+        If this cat is on the board, move forward
+        Otherwise, this cat rests and possibly is placed on the board
+        """
+        if self.is_on_board():
+            self._move()
+            self._move()
+        else:
+            self._rest()
