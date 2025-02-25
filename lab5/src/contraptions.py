@@ -34,6 +34,21 @@ class SnackDispenser(Contraption):
     def __init__(self):
         super().__init__('snacks', 100)
 
+    def end_round(self):
+        next = self._tile.entrance()
+        while next is not None:
+            if isinstance(next.actor(), Cat): # if a cat is next to the contraction
+                for i in range(5): #5 interactions per round
+                    next.actor().distract(1)
+                    
+                    
+                    #self.remove_from_board()
+
+
+
+
+
+
 class BatteryCharger(Contraption):
     """
     Every _other_ round, charges a new battery
