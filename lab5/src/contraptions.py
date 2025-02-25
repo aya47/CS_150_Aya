@@ -34,7 +34,6 @@ class SnackDispenser(Contraption):
     def __init__(self):
         super().__init__('snacks', 4)
         self.round = 0
-
     def interact(self):
         next = self._tile.entrance()
         self.round += 1
@@ -73,4 +72,13 @@ class BallThrower(Contraption):
     # You may find adding new methods to be helpful
 
     def __init__(self):
-        super().__init__('thrower', 100)
+        super().__init__('thrower', 3)
+
+    def end_round(self):
+        next = self._tile.entrance()
+        for i in range(3):
+            if next is not None and isinstance(next.actor(), Cat):
+                next.actor()._attention -= 1
+            elif next is not None and not isinstance(next.actor(), Cat):
+                next = next.entrance()
+            next = next.entrance()
