@@ -564,6 +564,7 @@ def test_ballthrower_action(test):
     thrower.end_round()
     eq_test(3, cat1.attention(), test)
     eq_test(4, cat2.attention(), test)
+    
 
     # move both cats
     cat1.end_round()
