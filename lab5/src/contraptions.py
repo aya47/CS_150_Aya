@@ -77,11 +77,18 @@ class BallThrower(Contraption):
     def end_round(self):
         next = self._tile.entrance()
         for i in range(3):
-            if next is not None and isinstance(next.actor(), Cat):
-                next.actor()._attention -= 1
+            if i != 0:
                 next = next.entrance()
+            print(f"Tile {i+1}")
+            if next is not None and isinstance(next.actor(), Cat):
+                print(f"it's a cat and its attention is: {next.actor()._attention}")
+                next.actor()._attention -= 1
+                print(f"its attention decreased and now is: {next.actor()._attention}")
+                #next = next.entrance()
                 break
             elif next is not None and not isinstance(next.actor(), Cat):
-                next = next.entrance()
+                print(f"it's not a cat: {next.actor()}")
+                continue
+                #next = next.entrance()
 
             

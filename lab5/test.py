@@ -551,6 +551,7 @@ def test_ballthrower_action(test):
     eq_test(4, cat1.attention(), test)
 
     # take the ballthrower action, which misses
+    print('Test 1, should miss\n')
     thrower.end_round()
     eq_test(4, cat1.attention(), test)
 
@@ -561,6 +562,7 @@ def test_ballthrower_action(test):
     eq_test(4, cat2.attention(), test)
 
     # take the ballthrower action again, which hits the first cat
+    print('\nTest 2, should hit cat 1\n')
     thrower.end_round()
     eq_test(3, cat1.attention(), test)
     eq_test(4, cat2.attention(), test)
@@ -571,6 +573,7 @@ def test_ballthrower_action(test):
     cat2.end_round()
 
     # take the ballthrower action again, which hits only the first cat
+    print('\nTest 3\n')
     thrower.end_round()
     eq_test(2, cat1.attention(), test)
     eq_test(4, cat2.attention(), test)
