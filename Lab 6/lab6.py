@@ -79,22 +79,11 @@ class BayesClassifier:
             if filename[:8] == self.neg_file_prefix:
                 # append to neg dictionary with new count 
                 self.update(words, self.neg_freqs)
-                for word in words:
-                    if word in self.neg_freqs:
-                        self.neg_freqs[word] += 1
-                    else: 
-                        self.neg_freqs[word] = 1
 
             elif filename[:8] == self.pos_file_prefix:
                 # append to pos dictionary with new count 
                 self.update(words, self.pos_freqs)
-                """
-                for word in words:
-                    if word in freqs:
-                        freqs[word] += 1
-                    else: 
-                        freqs[word] = 1
-                """
+                
 
             else:
                 continue 
@@ -248,7 +237,11 @@ class BayesClassifier:
             freqs - dictionary of frequencies to update
         """
         # TODO: your work goes here
-        pass  # remove this line once you've implemented this method
+        for word in words:
+            if word in freqs:
+                freqs[word] += 1
+            else: 
+                freqs[word] = 1
 
 
 if __name__ == "__main__":
