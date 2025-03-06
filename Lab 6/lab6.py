@@ -1,5 +1,4 @@
-import os, pickle, re
-from math import log
+import math, os, pickle, re
 from typing import Tuple, List, Dict
 
 
@@ -160,10 +159,9 @@ class BayesClassifier:
         # of each probability for add one smoothing (so that we never have a probability
         # of 0)
         for token in tokens:
-            pos_prob += sum(log((self.pos_freqs[token] + 1)/pos_words_len))
-            neg_prob += sum(log((self.neg_freqs[token] + 1)/neg_words_len))
-
-
+            pos_prob += math.log((self.pos_freqs.get(token,0) + 1)/pos_freq_len)
+            neg_prob += math.log((self.neg_freqs.get(token,0) + 1)/neg_freq_len)
+            
 
         # determine whether positive or negative was more probable (i.e. which one was
         # larger)
