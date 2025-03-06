@@ -71,6 +71,37 @@ class BayesClassifier:
         #     <the rest of your code for updating frequencies here>
         # Try enumerate function in the interpreter first so that you can see how it works. 
 
+        for index, filename in enumerate(files, 1): 
+            print(f"Training on file {index} of {len(files)}")
+            text = self.load_file(os.path.join(self.training_data_directory, filename))
+            words = self.tokenize(text)
+            # update frequencies 
+            if filename[:8] == self.neg_file_prefix:
+                # append to neg dictionary with new count 
+                self.update(words, self.neg_freqs)
+                for word in words:
+                    if word in self.neg_freqs:
+                        self.neg_freqs[word] += 1
+                    else: 
+                        self.neg_freqs[word] = 1
+
+            elif filename[:8] == self.pos_file_prefix:
+                # append to pos dictionary with new count 
+                self.update(words, self.pos_freqs)
+                """
+                for word in words:
+                    if word in freqs:
+                        freqs[word] += 1
+                    else: 
+                        freqs[word] = 1
+                """
+
+            else:
+                continue 
+        self.save_dict(self.pos_freqs, self.pos_filename)
+        self.save_dict(self.neg_freqs, self.neg_filename)
+
+
         # we want to fill pos_freqs and neg_freqs with the correct counts of words from
         # their respective reviews
         
