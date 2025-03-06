@@ -76,16 +76,15 @@ class BayesClassifier:
             text = self.load_file(os.path.join(self.training_data_directory, filename))
             words = self.tokenize(text)
             # update frequencies 
-            if filename[:8] == self.neg_file_prefix:
+            if filename.startswith(self.neg_file_prefix):
                 # append to neg dictionary with new count 
                 self.update(words, self.neg_freqs)
 
-            elif filename[:8] == self.pos_file_prefix:
+            elif filename.startswith(self.pos_file_prefix):
                 # append to pos dictionary with new count 
                 self.update(words, self.pos_freqs)
                 
-
-            else:
+            else: #neither pos or neg
                 continue 
         self.save_dict(self.pos_freqs, self.pos_filename)
         self.save_dict(self.neg_freqs, self.neg_filename)
