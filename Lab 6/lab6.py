@@ -1,4 +1,5 @@
-import math, os, pickle, re
+import os, pickle, re
+from math import log
 from typing import Tuple, List, Dict
 
 
@@ -130,32 +131,46 @@ class BayesClassifier:
         # TODO: your work goes here
 
         
-        # get a list of the individual tokens that occur in text
+        # get a list of the individual tokens that occur in text 
+        tokens = self.tokenize(text)
         
 
         # create some variables to store the positive and negative probability. since
         # we will be adding logs of probabilities, the initial values for the positive
         # and negative probabilities are set to 0
-        
+        pos_prob = 0
+        neg_prob = 0
 
         # get the sum of all of the frequencies of the features in each document class
         # (i.e. how many words occurred in all documents for the given class) - this
         # will be used in calculating the probability of each document class given each
         # individual feature
-        
 
+        # SUM OF FREQUENCIES
+        pos_freq_len = sum([self.pos_freqs[word] for word in self.pos_freqs])
+        neg_freq_len = sum([self.neg_freqs[word] for word in self.neg_freqs])
+        
+        #SUM OF WORDS = LEN OF DICT
+        pos_words_len = len(self.pos_freqs)
+        neg_words_len = len(self.neg_freqs)
+        
         # for each token in the text, calculate the probability of it occurring given a
         # postive document and given a negative document and add the logs of those to the
         # running sums. when calculating the probabilities, always add 1 to the numerator
         # of each probability for add one smoothing (so that we never have a probability
         # of 0)
-        
+        for token in tokens:
+            pos_prob += sum(log((self.pos_freqs[token] + 1)/pos_words_len))
+            neg_prob += sum(log((self.neg_freqs[token] + 1)/neg_words_len))
+
+
 
         # determine whether positive or negative was more probable (i.e. which one was
         # larger)
         # if they are equal, assume "positive"
         
         # return a string of "positive" or "negative"
+        return f"positive" if pos_prob >= neg_prob else f"negative"
 
     def load_file(self, filepath: str) -> str:
         """Loads text of given file
