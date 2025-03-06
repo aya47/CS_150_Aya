@@ -78,17 +78,16 @@ class BayesClassifier:
             # update frequencies 
             if filename.startswith(self.neg_file_prefix):
                 # append to neg dictionary with new count 
-                self.update(words, self.neg_freqs)
+                self.update_dict(words, self.neg_freqs)
 
             elif filename.startswith(self.pos_file_prefix):
                 # append to pos dictionary with new count 
-                self.update(words, self.pos_freqs)
+                self.update_dict(words, self.pos_freqs)
                 
             else: #neither pos or neg
                 continue 
         self.save_dict(self.pos_freqs, self.pos_filename)
         self.save_dict(self.neg_freqs, self.neg_filename)
-
 
         # we want to fill pos_freqs and neg_freqs with the correct counts of words from
         # their respective reviews
